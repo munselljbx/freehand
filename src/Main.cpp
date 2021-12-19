@@ -1,14 +1,18 @@
-#include "Game/App.hpp"
+#include "App/App.hpp"
+#include "Platform/Platform.hpp"
 
 int main()
 {
+	util::Platform platform;
 
 #if defined(_DEBUG)
 	std::cout << "DEBUG!" << std::endl;
 #endif
 
-	game::App freehand = game::App();
-	freehand.run();
+	sf::RenderWindow window;
+	app::App theApp = app::App(window);
+	theApp.run();
 
+	std::cout << "EXIT: GOOD" << std::endl;
 	return 0;
 }

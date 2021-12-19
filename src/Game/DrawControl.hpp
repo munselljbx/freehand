@@ -21,8 +21,8 @@ private:
 
 	bool m_isDrawing = false;
 	std::vector<sf::Vector2f> m_points;
-	const float m_DOT_RADIUS_DEFAULT = 10.0f;
-	const int m_DOT_POINTCOUNT_DEFAULT = 30;
+	const float m_DOT_RADIUS_DEFAULT = 7.0f;
+	const int m_DOT_POINTCOUNT_DEFAULT = 20;
 	mutable sf::CircleShape m_dot;
 };
 } // namespace game

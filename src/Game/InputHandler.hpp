@@ -1,35 +1,36 @@
 #ifndef GAME_INPUTHANDLER_HPP
 #define GAME_INPUTHANDLER_HPP
 
+#include "./App/App.hpp"
 #include "DrawControl.hpp"
-#include "PCH.hpp"
+#include "World.hpp"
 
 namespace game
 {
+class World;
 class InputHandler
 {
 public:
-	~InputHandler()
-	{
-		delete drawing;
-	}
-	void handleInput(sf::RenderWindow& window);
-	DrawControl* getDrawing() const
-	{
-		return drawing;
-	};
+	InputHandler(World& world);
+	~InputHandler();
+	void handleInput();
+	DrawControl& getDrawing();
 
 private:
+	void handleGainedFocus();
+	void handleLostFocus();
 	void handleKeyPress(sf::Event event);
-	void handleMousePress(sf::Event event, sf::RenderWindow& window);
-	void handleMouseRelease(sf::Event event, sf::RenderWindow& window);
-	void handleTouchBegan(sf::Event event, sf::RenderWindow& window);
-	void handleTouchEnded(sf::Event event, sf::RenderWindow& window);
-	void handleMouseMoved(sf::Event event, sf::RenderWindow& window);
-	void handleTouchMoved(sf::Event event, sf::RenderWindow& window);
+	void handleMousePress(sf::Event event);
+	void handleMouseRelease(sf::Event event);
+	void handleTouchBegan(sf::Event event);
+	void handleTouchEnded(sf::Event event);
+	void handleMouseMoved(sf::Event event);
+	void handleTouchMoved(sf::Event event);
 
-	DrawControl* drawing = new DrawControl();
+	World* m_world;
+	sf::RenderWindow* m_window;
+	DrawControl* m_drawing;
 };
-}
+} // namespace game
 
-#endif
+#endif // GAME_INPUTHANDLER_HPP

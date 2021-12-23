@@ -36,6 +36,12 @@ void InputHandler::handleInput()
 			case sf::Event::LostFocus:
 				handleLostFocus();
 				break;
+			case sf::Event::MouseEntered:
+				handleMouseEntered();
+				break;
+			case sf::Event::MouseLeft:
+				handleMouseLeft();
+				break;
 			case sf::Event::KeyPressed:
 				handleKeyPress(event);
 				break;
@@ -71,6 +77,18 @@ void InputHandler::handleGainedFocus()
 }
 
 void InputHandler::handleLostFocus()
+{
+	m_drawing->stopDraw();
+}
+
+void InputHandler::handleMouseEntered()
+{
+	sf::Cursor cursor;
+	cursor.loadFromSystem(sf::Cursor::Cross);
+	m_window->setMouseCursor(cursor);
+}
+
+void InputHandler::handleMouseLeft()
 {
 	m_drawing->stopDraw();
 }

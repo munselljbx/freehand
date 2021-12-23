@@ -19,6 +19,8 @@ public:
 private:
 	void handleGainedFocus();
 	void handleLostFocus();
+	void handleMouseEntered();
+	void handleMouseLeft();
 	void handleKeyPress(sf::Event event);
 	void handleMousePress(sf::Event event);
 	void handleMouseRelease(sf::Event event);

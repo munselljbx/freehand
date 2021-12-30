@@ -2,12 +2,11 @@
 
 namespace game
 {
-
 InputHandler::InputHandler(World& world)
 {
 	m_world = &world;
-	m_drawing = new DrawControl();
 	m_window = &m_world->getWindow();
+	m_drawing = new DrawControl(m_world->getActorManager());
 }
 
 InputHandler::~InputHandler()

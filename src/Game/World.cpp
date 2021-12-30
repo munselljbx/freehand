@@ -2,18 +2,25 @@
 
 namespace game
 {
-World::World(sf::RenderWindow& window)
+World::World(sf::RenderWindow& window) :
+	m_window(&window)
 {
-	m_window = &window;
+	m_actors = new ActorManager();
+	m_input = new InputHandler(*this);
+}
+
+World::~World()
+{
+	delete m_input;
+	delete m_actors;
 }
 
 void World::gameLoop()
 {
 	//Setup
-	InputHandler input = InputHandler(*this);
-
 	sf::Int32 previous = m_worldClock.getElapsedTime().asMilliseconds();
 	sf::Int32 lag = 0;
+	//Main Loop
 	while (m_window->isOpen() && !m_exit)
 	{
 		sf::Int32 current = m_worldClock.getElapsedTime().asMilliseconds();
@@ -23,19 +30,20 @@ void World::gameLoop()
 		lag += elapsed;
 
 		// Input handling
-		input.handleInput();
+		m_input->handleInput();
 
 		//Fixed Time Loop
 		while (lag >= MS_PER_UPDATE)
 		{
-
+			// todo: update actors
 			//For gameloop DO NOT TOUCH
 			lag -= MS_PER_UPDATE;
 		}
 
 		//Render
 		m_window->clear();
-		m_window->draw(input.getDrawing());
+		m_window->draw(*m_actors);
+		m_window->draw(m_input->getDrawing());
 		m_window->display();
 
 		if (isPaused())
@@ -67,6 +75,11 @@ void World::pause(bool shouldPause)
 sf::RenderWindow& World::getWindow() const
 {
 	return *m_window;
+}
+
+ActorManager& World::getActorManager() const
+{
+	return *m_actors;
 }
 
 } // namespace game

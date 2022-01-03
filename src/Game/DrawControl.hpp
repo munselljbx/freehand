@@ -3,9 +3,10 @@
 
 #include "ActorManager.hpp"
 #include "Boundary.hpp"
+#include "Helper.hpp"
 #include "Pool.hpp"
 #include "Ray.hpp"
-#include "helper.hpp"
+#include <pocketfft-cpp/pocketfft_hdronly.h>
 
 namespace game
 {
@@ -25,8 +26,9 @@ public:
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	bool evaluateLine();
-	bool evaluateSine();
+	bool evaluateData() const;
+	bool evaluateLine(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, float meanErr) const;
+	bool evaluateSine(float mRise, float mRun, const sf::Vector2f& origin, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint) const;
 
 	ActorManager* m_actors;
 

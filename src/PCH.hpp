@@ -37,6 +37,7 @@
 // Additional C/C++ libs
 #include <atomic>
 #include <cassert>
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include <cstdlib>
 #include <exception>

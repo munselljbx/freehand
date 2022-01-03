@@ -33,10 +33,7 @@ void Boundary::update()
 
 void Boundary::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	std::cout << "d" << std::endl;
 	target.draw(m_line, states);
-	std::cout << m_line[0].position.x << std::endl;
-	std::cout << m_line[1].position.x << std::endl;
 }
 
 }

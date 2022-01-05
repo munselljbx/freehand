@@ -261,7 +261,7 @@ bool DrawControl::evaluateSine(float mRise, float mRun, const sf::Vector2f& orig
 	float amplitude = rms * 1.41421356237; // sqrt 2
 	float speed = 5.f;
 
-	Ray newRay(sf::Uint8(1U), health, startPoint, endPoint, frequency, amplitude, speed);
+	Ray newRay(sf::Uint8(1U), health, startPoint, endPoint, frequency, amplitude, speed, maxPhase);
 	m_actors->m_rayPool.add(newRay);
 	return true;
 }

@@ -2,6 +2,7 @@
 #define GAME_WORLD_HPP
 
 #include "./App/PauseMenu.hpp"
+#include "./Map/IMap.hpp"
 #include "ActorManager.hpp"
 #include "InputHandler.hpp"
 #include "Ray.hpp"
@@ -12,10 +13,11 @@ class InputHandler;
 class World
 {
 public:
-	World(sf::RenderWindow& window);
+	World(sf::RenderWindow& window, map::IMap& map);
 	~World();
 
 	void gameLoop();
+	void doPause();
 
 	bool isPaused() const;
 	void pause(bool shouldPause);
@@ -32,6 +34,7 @@ private:
 	sf::RenderWindow* m_window;
 	InputHandler* m_input;
 	ActorManager* m_actors;
+	map::IMap* m_map;
 };
 }
 

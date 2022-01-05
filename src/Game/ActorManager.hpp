@@ -15,6 +15,7 @@ public:
 		m_boundaryPool(10U),
 		m_rayPool(30U)
 	{}
+	void update();
 
 	//Pool<Source> m_sourcePool;
 	Pool<Boundary> m_boundaryPool;

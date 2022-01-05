@@ -29,12 +29,16 @@ void App::run()
 {
 	while (m_window->isOpen())
 	{
+		// Start menu
 		StartMenu* mainMenu = new StartMenu();
 		mainMenu->run(*m_window);
 		delete mainMenu;
+
 		// Make world and loop
-		game::World* world = new game::World(*m_window);
+		map::IMap* map = new map::Duel(*m_window);
+		game::World* world = new game::World(*m_window, *map);
 		world->gameLoop();
+		delete map;
 		delete world;
 	}
 }

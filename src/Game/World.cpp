@@ -2,8 +2,9 @@
 
 namespace game
 {
-World::World(sf::RenderWindow& window) :
-	m_window(&window)
+World::World(sf::RenderWindow& window, map::IMap& map) :
+	m_window(&window),
+	m_map(&map)
 {
 	m_actors = new ActorManager();
 	m_input = new InputHandler(*this);
@@ -37,29 +38,36 @@ void World::gameLoop()
 		{
 			// todo: update actors
 			//For gameloop DO NOT TOUCH
+			//m_actors->update();
 			lag -= MS_PER_UPDATE;
 		}
 
 		//Render
 		m_window->clear();
+		m_window->draw(*m_map);
 		m_window->draw(*m_actors);
 		m_window->draw(m_input->getDrawing());
 		m_window->display();
 
 		if (isPaused())
 		{ //Enter Pause loop
-			sf::Texture windowContentTexture;
-			sf::Vector2u windowSize = m_window->getSize();
-			windowContentTexture.create(windowSize.x, windowSize.y);
-			windowContentTexture.update(*m_window);
-			app::PauseMenu* gamePauseMenu = new app::PauseMenu(windowContentTexture);
-			gamePauseMenu->run(*m_window);
-			delete gamePauseMenu;
-
-			m_gamePaused = false;
-			m_window->setFramerateLimit(MAX_FPS);
+			doPause();
 		}
 	}
+}
+
+void World::doPause()
+{
+	sf::Texture windowContentTexture;
+	sf::Vector2u windowSize = m_window->getSize();
+	windowContentTexture.create(windowSize.x, windowSize.y);
+	windowContentTexture.update(*m_window);
+	app::PauseMenu* gamePauseMenu = new app::PauseMenu(windowContentTexture);
+	gamePauseMenu->run(*m_window);
+	delete gamePauseMenu;
+
+	m_gamePaused = false;
+	m_window->setFramerateLimit(MAX_FPS);
 }
 
 bool World::isPaused() const

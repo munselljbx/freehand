@@ -10,7 +10,7 @@ class Ray : public IActor
 {
 public:
 	Ray();
-	Ray(sf::Uint8 team, float health, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, float frequency, float amplitude, float speed);
+	Ray(sf::Uint8 team, float health, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, float frequency, float amplitude, float speed, float phase);
 	virtual void update();
 
 	bool operator==(const Ray& other) const
@@ -29,6 +29,7 @@ private:
 	float m_freq;
 	float m_amp;
 	float m_speed;
+	float m_phase;
 
 	sf::Vector2f m_origin;
 	sf::Vector2f m_dir;

@@ -6,7 +6,7 @@ Ray::Ray() :
 	IActor(sf::Uint8(0U), 0.f)
 {
 }
-Ray::Ray(sf::Uint8 team, float health, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, float frequency, float amplitude, float speed) :
+Ray::Ray(sf::Uint8 team, float health, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, float frequency, float amplitude, float speed, float phase) :
 	IActor(team, health),
 	m_startFixed(true),
 	m_endFixed(false),
@@ -14,6 +14,7 @@ Ray::Ray(sf::Uint8 team, float health, const sf::Vector2f& startPoint, const sf:
 	m_freq(frequency),
 	m_amp(amplitude),
 	m_speed(speed),
+	m_phase(phase),
 	m_origin(startPoint.x, startPoint.y),
 	m_dir(sf::Vector2f(endPoint.x - startPoint.x, endPoint.y - startPoint.y)),
 	m_start(startPoint),
@@ -26,7 +27,7 @@ Ray::Ray(sf::Uint8 team, float health, const sf::Vector2f& startPoint, const sf:
 	{
 		advance();
 	}
-	m_lines.push_back(sf::Vertex(m_end, m_teamColor));
+	//m_lines.push_back(sf::Vertex(m_end, m_teamColor)); // helps visualize errors
 	m_startFixed = false;
 }
 
@@ -34,7 +35,7 @@ void Ray::advance()
 {
 	if (!m_endFixed)
 	{
-		float nextY = -m_amp * static_cast<float>(sinf(m_freq * m_tPar)); // todo: reduce sin calls
+		float nextY = m_amp * static_cast<float>(cosf(m_freq * m_tPar + m_phase)); // todo: reduce sin calls
 
 		float r = v2fDist(sf::Vector2f(0.f, 0.f), m_dir);
 		float xRot = m_tPar * m_dir.x / r - nextY * m_dir.y / r;

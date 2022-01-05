@@ -2,6 +2,8 @@
 #define APP_APP_HPP
 
 #include "./Game/World.hpp"
+#include "./Map/Duel.hpp"
+#include "./Map/IMap.hpp"
 #include "./Platform/Platform.hpp"
 #include "StartMenu.hpp"
 

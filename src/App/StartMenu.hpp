@@ -8,7 +8,7 @@ namespace app
 class StartMenu : public IAppMenu
 {
 public:
-	virtual void run(sf::RenderWindow& window);
+	virtual void run(sf::RenderWindow& window) override;
 };
 }
 

@@ -1,7 +1,6 @@
 #ifndef APP_PAUSEMENU_HPP
 #define APP_PAUSEMENU_HPP
 
-#include "App.hpp"
 #include "IAppMenu.hpp"
 
 namespace app
@@ -9,10 +8,11 @@ namespace app
 class PauseMenu : public IAppMenu
 {
 public:
-	PauseMenu(const sf::Texture& backgroundTex) :
-		IAppMenu(backgroundTex)
-	{}
-	void run(sf::RenderWindow& window);
+	PauseMenu(const sf::Texture& backgroundTex);
+	void run(sf::RenderWindow& window) override;
+
+private:
+	sf::Sprite m_background;
 };
 } // namespace app
 

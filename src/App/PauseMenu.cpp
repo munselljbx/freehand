@@ -2,6 +2,12 @@
 
 namespace app
 {
+
+PauseMenu::PauseMenu(const sf::Texture& backgroundTex)
+{
+	m_background.setTexture(backgroundTex);
+}
+
 void PauseMenu::run(sf::RenderWindow& window)
 {
 	sf::Font font;

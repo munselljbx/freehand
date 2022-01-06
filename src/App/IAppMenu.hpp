@@ -6,17 +6,11 @@ namespace app
 class IAppMenu
 {
 public:
-	IAppMenu();
-	IAppMenu(const sf::Texture& backgroundTex)
-	{
-		m_background.setTexture(backgroundTex);
-	}
 	virtual ~IAppMenu() = default;
 	virtual void run(sf::RenderWindow& window) = 0;
 
 protected:
 	const static int MENU_FPS = 60;
-	sf::Sprite m_background;
 	bool m_exit = false;
 };
 } // namespace app

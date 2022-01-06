@@ -127,13 +127,9 @@ bool DrawControl::evaluateData() const
 	const float eCoef = (last.x * denominator + last.y * numerator) / (numerator * numerator + denominator * denominator);
 	sf::Vector2f endPoint = sf::Vector2f(eCoef * denominator, eCoef * numerator + b);
 
-	const float MAX_LINE_ERR = 20.f;
-	if (meanErr > MAX_LINE_ERR)
+	if (meanErr > m_MAX_LINE_ERR)
 	{
-		sf::Vector2f fr = m_points.front();
-		sf::Vector2f bk = m_points.back();
-
-		return evaluateSine(bk.y-fr.y, bk.x-fr.x, startPoint, startPoint, endPoint);
+		return evaluateSine(last.y - first.y, last.x - first.x, startPoint, startPoint, endPoint);
 		//return evaluateSine(numerator, denominator, b, startPoint, endPoint);
 	}
 	else
@@ -145,9 +141,14 @@ bool DrawControl::evaluateData() const
 bool DrawControl::evaluateLine(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, float meanErr) const
 {
 	// health
-	float health = 0;
+	float health = 0.f;
 	float length = v2fDist(startPoint, endPoint);
-	if (meanErr > 0.f)
+	if (length < m_MIN_BOUNDARY_LENGTH || length > m_MAX_BOUNDARY_LENGTH)
+	{
+		std::cout << "Invalid Boundary Length" << std::endl;
+		return false;
+	}
+	else if (meanErr > 0.f)
 	{
 		health = 1 / meanErr * length;
 	}
@@ -157,25 +158,48 @@ bool DrawControl::evaluateLine(const sf::Vector2f& startPoint, const sf::Vector2
 	}
 
 	// make Boundary //todo: fix team number
-	Boundary bound(sf::Uint8(1U), health, startPoint, endPoint);
+	Boundary bound(sf::Uint8(1U), health, length, startPoint, endPoint);
 	m_actors->m_boundaryPool.add(bound);
 	return true;
 }
 
 bool DrawControl::evaluateSine(float mRise, float mRun, const sf::Vector2f& origin, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint) const
 {
+	// mRise/mRun is the slope of the midline
+	// origin, startPoint, endPoint should be on midline
 	using namespace std;
 
-	// shift and rotate axis using linear fit
-	float mHypot = sqrtf(mRise * mRise + mRun * mRun);
-	float sinTheta = mRise / mHypot;
-	float cosTheta = mRun / mHypot;
+	// shift origin to (0,0) and rotate so midline is x-axis
 	vector<float> xRot;
 	vector<float> yRot;
-	for (const auto& i : m_points)
+	if (mRise == 0.f)
+	{ // vertical
+		for (const auto& i : m_points)
+		{
+			xRot.push_back(i.y - origin.y);
+			yRot.push_back(i.x - origin.x);
+		}
+	}
+	else if (mRun == 0.f)
+	{ // horizontal
+		for (const auto& i : m_points)
+		{
+			xRot.push_back(i.x - origin.x);
+			yRot.push_back(i.y - origin.y);
+		}
+	}
+	else
 	{
-		xRot.push_back((i.x - origin.x) * cosTheta - (i.y - origin.y) * sinTheta);
-		yRot.push_back((i.x - origin.x) * sinTheta + (i.y - origin.y) * cosTheta);
+		// shift and rotate axis using linear fit
+		float mHypot = sqrtf(mRise * mRise + mRun * mRun);
+		float sinTheta = mRise / mHypot;
+		float cosTheta = mRun / mHypot;
+
+		for (const auto& i : m_points)
+		{
+			xRot.push_back((i.x - origin.x) * cosTheta - (i.y - origin.y) * sinTheta);
+			yRot.push_back((i.x - origin.x) * sinTheta + (i.y - origin.y) * cosTheta);
+		}
 	}
 
 	// ascending sort

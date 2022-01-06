@@ -5,13 +5,14 @@ namespace map
 {
 class IMap : public sf::Drawable
 {
+public:
+	virtual bool inArea(sf::Uint8 team, const sf::Vector2f& point) const = 0;
+
 protected:
 	IMap(sf::Uint8 nTeams, sf::RenderWindow& window) :
 		m_nTeams(nTeams),
 		m_window(&window)
 	{}
-
-	virtual bool inArea(sf::Uint8 team, const sf::Vector2f& point) const = 0;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 
 	const sf::Uint8 m_nTeams;

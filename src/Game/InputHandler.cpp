@@ -73,6 +73,8 @@ void InputHandler::handleGainedFocus()
 	sf::Cursor cursor;
 	cursor.loadFromSystem(sf::Cursor::Cross);
 	m_window->setMouseCursor(cursor);
+
+	//m_window->setMouseCursorGrabbed(true);
 }
 
 void InputHandler::handleLostFocus()
@@ -104,7 +106,7 @@ void InputHandler::handleKeyPress(sf::Event event)
 void InputHandler::handleMousePress(sf::Event event)
 {
 	sf::Vector2f mousePos = m_window->mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-	if (mousePos.x < (float)m_window->getSize().x / 2.0f)
+	if (m_world->getMap().inArea(m_world->getTeam(), mousePos))
 	{
 		if (event.mouseButton.button == sf::Mouse::Left)
 		{
@@ -133,7 +135,7 @@ void InputHandler::handleTouchBegan(sf::Event event)
 	sf::Vector2f touchPos = m_window->mapPixelToCoords(sf::Vector2i(event.touch.x, event.touch.y));
 	if (event.touch.finger == 0)
 	{
-		if (touchPos.x < (float)m_window->getSize().x / 2.)
+		if (m_world->getMap().inArea(m_world->getTeam(), touchPos))
 		{
 			m_drawing->startDraw();
 			m_drawing->addPoint(touchPos);
@@ -154,12 +156,26 @@ void InputHandler::handleTouchEnded(sf::Event event)
 void InputHandler::handleMouseMoved(sf::Event event)
 {
 	sf::Vector2f mousePos = m_window->mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
-	m_drawing->addPoint(mousePos);
+	if (m_world->getMap().inArea(m_world->getTeam(), mousePos))
+	{
+		m_drawing->addPoint(mousePos);
+	}
+	else
+	{
+		m_drawing->stopDraw();
+	}
 }
 
 void InputHandler::handleTouchMoved(sf::Event event)
 {
 	sf::Vector2f touchPos = m_window->mapPixelToCoords(sf::Vector2i(event.touch.x, event.touch.y));
-	m_drawing->addPoint(touchPos);
+	if (m_world->getMap().inArea(m_world->getTeam(), touchPos))
+	{
+		m_drawing->addPoint(touchPos);
+	}
+	else
+	{
+		m_drawing->stopDraw();
+	}
 }
 } // namespace game

@@ -13,7 +13,7 @@ class InputHandler;
 class World
 {
 public:
-	World(sf::RenderWindow& window, map::IMap& map);
+	World(sf::RenderWindow& window, map::IMap& map, sf::Uint8 team);
 	~World();
 
 	void gameLoop();
@@ -23,6 +23,8 @@ public:
 	void pause(bool shouldPause);
 	sf::RenderWindow& getWindow() const;
 	ActorManager& getActorManager() const;
+	map::IMap& getMap() const;
+	sf::Uint8 getTeam() const;
 
 private:
 	bool m_gamePaused = false;
@@ -35,6 +37,8 @@ private:
 	InputHandler* m_input;
 	ActorManager* m_actors;
 	map::IMap* m_map;
+
+	sf::Uint8 m_localTeam;
 };
 }
 

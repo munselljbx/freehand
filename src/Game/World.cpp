@@ -2,9 +2,10 @@
 
 namespace game
 {
-World::World(sf::RenderWindow& window, map::IMap& map) :
+World::World(sf::RenderWindow& window, map::IMap& map, sf::Uint8 team) :
 	m_window(&window),
-	m_map(&map)
+	m_map(&map),
+	m_localTeam(team)
 {
 	m_actors = new ActorManager();
 	m_input = new InputHandler(*this);
@@ -88,6 +89,16 @@ sf::RenderWindow& World::getWindow() const
 ActorManager& World::getActorManager() const
 {
 	return *m_actors;
+}
+
+map::IMap& World::getMap() const
+{
+	return *m_map;
+}
+
+sf::Uint8 World::getTeam() const
+{
+	return m_localTeam;
 }
 
 } // namespace game

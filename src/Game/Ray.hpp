@@ -22,6 +22,8 @@ private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void advance();
 
+	inline const static float m_MAX_HEALTH = 50.f;
+
 	bool m_startFixed, m_endFixed; // startPoint or endPoint not moving
 
 	float m_tPar; // sine parameter. How far ray has traveled

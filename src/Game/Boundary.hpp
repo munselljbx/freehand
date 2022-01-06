@@ -2,6 +2,7 @@
 #define GAME_BOUNDARY_HPP
 
 #include "IActor.hpp"
+#include "Helper.hpp"
 
 namespace game
 {
@@ -9,8 +10,8 @@ class Boundary : public IActor
 {
 public:
 	Boundary();
-	Boundary(sf::Uint8 team, float health, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint);
-	void setFields(sf::Uint8 team, float health, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint);
+	Boundary(sf::Uint8 team, float health, float maxHealth, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint);
+	void setFields(sf::Uint8 team, float health, float maxHealth, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint);
 	virtual void update();
 
 	bool operator==(const Boundary& other) const

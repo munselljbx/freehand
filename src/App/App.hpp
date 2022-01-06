@@ -22,6 +22,8 @@ public:
 	sf::RenderWindow& getWindow() const;
 
 private:
+	void printFullscreenModes() const;
+
 	sf::RenderWindow* m_window;
 	sf::WindowHandle m_systemHandle;
 	util::Platform m_platform;

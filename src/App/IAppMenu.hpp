@@ -7,7 +7,10 @@ class IAppMenu
 {
 public:
 	IAppMenu();
-	IAppMenu(const sf::Texture& backgroundTex);
+	IAppMenu(const sf::Texture& backgroundTex)
+	{
+		m_background.setTexture(backgroundTex);
+	}
 	virtual ~IAppMenu() = default;
 	virtual void run(sf::RenderWindow& window) = 0;
 

@@ -3,11 +3,11 @@
 namespace game
 {
 Ray::Ray() :
-	IActor(sf::Uint8(0U), 0.f)
+	IActor(sf::Uint8(0U), 0.f, m_MAX_HEALTH)
 {
 }
 Ray::Ray(sf::Uint8 team, float health, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, float frequency, float amplitude, float speed, float phase) :
-	IActor(team, health),
+	IActor(team, health, m_MAX_HEALTH),
 	m_startFixed(true),
 	m_endFixed(false),
 	m_tPar(0.f),

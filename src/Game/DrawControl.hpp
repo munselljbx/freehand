@@ -34,10 +34,23 @@ private:
 
 	bool m_isDrawing = false;
 	std::vector<sf::Vector2f> m_points;
-	const float m_DOT_RADIUS_DEFAULT = 7.0f;
-	const unsigned int m_DOT_POINTCOUNT_DEFAULT = 20U;
+	inline const static float m_DOT_RADIUS_DEFAULT = 7.0f;
+	inline const static unsigned int m_DOT_POINTCOUNT_DEFAULT = 20U;
 	mutable sf::CircleShape m_dot;
-	const unsigned int m_MIN_POINTS = 15U;
+	inline const static unsigned int m_MIN_POINTS = 15U;
+	inline const static float m_MAX_LINE_ERR = 30.f;
+
+	// Boundary reqs
+	inline const static float m_MIN_BOUNDARY_LENGTH = 10.f;
+	inline const static float m_MAX_BOUNDARY_LENGTH = 200.f;
+
+	// Ray reqs //todo: check these
+	inline const static float m_MIN_RAY_LENGTH = 10.f;
+	inline const static float m_MAX_RAY_LENGTH = 200.f;
+	inline const static unsigned int m_MIN_RAY_CYCLES = 1U;
+	inline const static unsigned int m_MAX_RAY_CYCLES = 10U;
+	inline const static float m_MIN_RAY_AMPLITUDE = 10.f;
+	inline const static float m_MAX_RAY_AMPLITUDE = 100.f;
 };
 } // namespace game
 

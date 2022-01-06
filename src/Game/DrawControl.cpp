@@ -39,7 +39,7 @@ void DrawControl::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		for (auto i : m_points)
 		{
-			m_dot.setPosition(i);
+			m_dot.setPosition(settings::GameSettings::worldToCoord(i));
 			target.draw(m_dot, states);
 		}
 	}
@@ -157,7 +157,7 @@ bool DrawControl::evaluateLine(const sf::Vector2f& startPoint, const sf::Vector2
 		health = length;
 	}
 
-	// make Boundary //todo: fix team number
+	// make Boundary //todo: fix team number and no temp object
 	Boundary bound(sf::Uint8(1U), health, length, startPoint, endPoint);
 	m_actors->m_boundaryPool.add(bound);
 	return true;
@@ -284,6 +284,7 @@ bool DrawControl::evaluateSine(float mRise, float mRun, const sf::Vector2f& orig
 	float amplitude = rms * 1.41421356237; // sqrt 2
 	float speed = 5.f;
 
+	// todo: fix team number and no temp object
 	Ray newRay(sf::Uint8(1U), health, startPoint, endPoint, frequency, amplitude, speed, maxPhase);
 	m_actors->m_rayPool.add(newRay);
 	return true;

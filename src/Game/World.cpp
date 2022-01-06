@@ -7,6 +7,8 @@ World::World(sf::RenderWindow& window, map::IMap& map, sf::Uint8 team) :
 	m_map(&map),
 	m_localTeam(team)
 {
+	settings::GameSettings::windowSize = m_window->mapPixelToCoords(static_cast<sf::Vector2i>(m_window->getSize()));
+
 	m_actors = new ActorManager();
 	m_input = new InputHandler(*this);
 }

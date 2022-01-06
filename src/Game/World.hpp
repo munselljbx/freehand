@@ -6,6 +6,7 @@
 #include "ActorManager.hpp"
 #include "InputHandler.hpp"
 #include "Ray.hpp"
+#include "Settings/GameSettings.hpp"
 
 namespace game
 {
@@ -21,9 +22,6 @@ public:
 
 	bool isPaused() const;
 	void pause(bool shouldPause);
-
-	sf::Vector2f pixelToWorld(const sf::Vector2u& pixelPos) const;
-	sf::Vector2u worldToCoord(const sf::Vector2f& worldPos) const;
 
 	sf::RenderWindow& getWindow() const;
 	ActorManager& getActorManager() const;

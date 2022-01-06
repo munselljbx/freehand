@@ -6,6 +6,7 @@
 #include "Helper.hpp"
 #include "Pool.hpp"
 #include "Ray.hpp"
+#include "Settings/GameSettings.hpp"
 #include <pocketfft-cpp/pocketfft_hdronly.h>
 
 namespace game

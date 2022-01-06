@@ -45,6 +45,15 @@ public:
 	bool inArea;
 
 protected:
+	void reInit(sf::Uint8 team, float health, float maxHealth)
+	{
+		inUse = false;
+		inArea = false;
+		m_team = team;
+		m_maxHealth = maxHealth;
+		setHealth(health);
+		m_teamColor = settings::GameSettings::getTeamColor(team);
+	}
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 	virtual void updateAlpha()
 	{

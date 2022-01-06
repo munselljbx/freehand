@@ -15,12 +15,10 @@ public:
 	App(sf::RenderWindow& window);
 	~App()
 	{
-		delete m_window;
 	}
 	void run();
 	void applyCursor();
 	sf::RenderWindow& getWindow() const;
-
 private:
 	void printFullscreenModes() const;
 

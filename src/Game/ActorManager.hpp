@@ -12,7 +12,7 @@ class ActorManager : public sf::Drawable
 public:
 	ActorManager() :
 		//m_sourcePool(m_INITIAL_SOURCE_SIZE),
-		m_boundaryPool(10U),
+		m_boundaryPool(20U),
 		m_rayPool(30U)
 	{}
 	void update();

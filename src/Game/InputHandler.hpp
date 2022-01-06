@@ -3,6 +3,7 @@
 
 #include "./App/App.hpp"
 #include "DrawControl.hpp"
+#include "Settings/GameSettings.hpp"
 #include "World.hpp"
 
 namespace game
@@ -17,6 +18,8 @@ public:
 	DrawControl& getDrawing();
 
 private:
+	sf::Vector2f coordToWorld(const sf::Vector2f& coordPos) const;
+
 	void handleGainedFocus();
 	void handleLostFocus();
 	void handleMouseEntered();

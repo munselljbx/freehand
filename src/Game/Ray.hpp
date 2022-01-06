@@ -3,6 +3,7 @@
 
 #include "Helper.hpp"
 #include "IActor.hpp"
+#include "Settings/GameSettings.hpp"
 
 namespace game
 {
@@ -38,7 +39,7 @@ private:
 	sf::Vector2f m_start;
 	sf::Vector2f m_end;
 
-	std::vector<sf::Vertex> m_lines; // todo: O(1) removal queue but with data access
+	std::vector<sf::Vector2f> m_points; // todo: O(1) removal queue but with data access
 };
 } // namespace game
 

@@ -1,8 +1,9 @@
 #ifndef GAME_BOUNDARY_HPP
 #define GAME_BOUNDARY_HPP
 
-#include "IActor.hpp"
 #include "Helper.hpp"
+#include "IActor.hpp"
+#include "Settings/GameSettings.hpp"
 
 namespace game
 {
@@ -12,6 +13,8 @@ public:
 	Boundary();
 	Boundary(sf::Uint8 team, float health, float maxHealth, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint);
 	void setFields(sf::Uint8 team, float health, float maxHealth, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint);
+	void setLine(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint);
+
 	virtual void update();
 
 	bool operator==(const Boundary& other) const
@@ -22,7 +25,8 @@ public:
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	sf::VertexArray m_line; // two vertices: [0] is startpoint of line [1] end.
+	std::vector<sf::Vector2f> m_points; // two points
+	sf::VertexArray m_line;				// for drawing. two vertices: [0] is startpoint of line [1] end.
 };
 } // namespace game
 

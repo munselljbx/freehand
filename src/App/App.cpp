@@ -9,7 +9,7 @@ App::App(sf::RenderWindow& window)
 	// in Windows at least, this must be called before creating the window
 	float screenScalingFactor = m_platform.getScreenScalingFactor(m_systemHandle);
 	// Use the screenScalingFactor
-	m_window->create(sf::VideoMode(960.0f * screenScalingFactor, 540.0f * screenScalingFactor), "FREEHAND");
+	m_window->create(sf::VideoMode(960.0f * screenScalingFactor, 540.0f * screenScalingFactor), "FREEHAND", sf::Style::Close);
 	//m_window->create(sf::VideoMode::getDesktopMode(), "FREEHAND", sf::Style::None);
 	m_platform.setIcon(m_systemHandle);
 

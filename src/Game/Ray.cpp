@@ -27,7 +27,7 @@ Ray::Ray(sf::Uint8 team, float health, const sf::Vector2f& startPoint, const sf:
 	{
 		advance();
 	}
-	//m_lines.push_back(sf::Vertex(m_end, m_teamColor)); // helps visualize errors
+	//m_points.push_back(sf::Vertex(m_end, m_teamColor)); // helps visualize errors
 	m_startFixed = false;
 }
 
@@ -44,13 +44,13 @@ void Ray::advance()
 		float x = xRot + m_origin.x;
 		float y = yRot + m_origin.y;
 
-		m_lines.push_back(sf::Vertex(sf::Vector2f(x, y), m_teamColor));
+		m_points.push_back(sf::Vector2f(x, y));
 
 		m_tPar += m_speed;
 	}
 	if (!m_startFixed)
 	{
-		m_lines.erase(m_lines.begin());
+		m_points.erase(m_points.begin());
 	}
 }
 
@@ -62,6 +62,11 @@ void Ray::update()
 void Ray::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	// update vertex array of lines to display ray
-	target.draw(m_lines.data(), m_lines.size(), sf::LinesStrip, states);
+	sf::VertexArray graphic(sf::LineStrip, m_points.size());
+	for (size_t i = 0U; i < m_points.size(); i++)
+	{
+		graphic[i] = sf::Vertex(settings::GameSettings::worldToCoord(m_points[i]), m_teamColor);
+	}
+	target.draw(graphic, states);
 }
 }

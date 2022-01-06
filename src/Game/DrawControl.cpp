@@ -212,11 +212,10 @@ bool DrawControl::evaluateSine(float mRise, float mRun, const sf::Vector2f& orig
 	// sort by ascending x-value and shift to start at x=0
 	vector<float> xRotSort;
 	vector<float> yRotSort;
-	size_t xRotMin = idx[0];
 	for (auto i : idx)
 	{
-		xRotSort.push_back(xRot[i] - xRot[xRotMin]);
-		yRotSort.push_back(yRot[i] - yRot[xRotMin]);
+		xRotSort.push_back(xRot[i]);
+		yRotSort.push_back(yRot[i]);
 	}
 
 	// make fixed spacing axis

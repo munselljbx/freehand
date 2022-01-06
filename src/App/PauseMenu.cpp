@@ -13,7 +13,7 @@ void PauseMenu::run(sf::RenderWindow& window)
 	sf::Font font;
 	font.loadFromFile("content/fonts/Ubuntu-Title.ttf");
 	sf::Text text("paused", font, 50U);
-	sf::Vector2u windowSize = window.getSize();
+	sf::Vector2f windowSize = window.mapPixelToCoords(static_cast<sf::Vector2i>(window.getSize()));
 	text.setPosition(windowSize.x / 2.0f, windowSize.y / 2.0f);
 
 	while (window.isOpen() && !m_exit)

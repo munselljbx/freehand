@@ -60,7 +60,7 @@ void World::gameLoop()
 void World::doPause()
 {
 	sf::Texture windowContentTexture;
-	sf::Vector2u windowSize = m_window->getSize();
+	sf::Vector2u windowSize = static_cast<sf::Vector2u>(m_window->mapPixelToCoords(static_cast<sf::Vector2i>(m_window->getSize())));
 	windowContentTexture.create(windowSize.x, windowSize.y);
 	windowContentTexture.update(*m_window);
 	app::PauseMenu* gamePauseMenu = new app::PauseMenu(windowContentTexture);

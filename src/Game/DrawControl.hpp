@@ -42,7 +42,7 @@ private:
 
 	// Boundary reqs
 	inline const static float m_MIN_BOUNDARY_LENGTH = 10.f;
-	inline const static float m_MAX_BOUNDARY_LENGTH = 200.f;
+	inline const static float m_MAX_BOUNDARY_LENGTH = 500.f;
 
 	// Ray reqs //todo: check these
 	inline const static float m_MIN_RAY_LENGTH = 10.f;

@@ -15,7 +15,7 @@ Duel::Duel(sf::RenderWindow& window) :
 
 bool Duel::inArea(sf::Uint8 team, const sf::Vector2f& point) const
 {
-	sf::Vector2f fWindowSize = static_cast<sf::Vector2f>(m_window->getSize());
+	sf::Vector2f fWindowSize = m_window->mapPixelToCoords(static_cast<sf::Vector2i>(m_window->getSize()));
 	if (point.x < 0 || point.y < 0 || point.x > fWindowSize.x || point.y > fWindowSize.y)
 		return false;
 
@@ -33,9 +33,9 @@ bool Duel::inArea(sf::Uint8 team, const sf::Vector2f& point) const
 
 void Duel::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	sf::Vector2u windowSize = target.getSize();
-	float wx = (float)windowSize.x;
-	float wy = (float)windowSize.y;
+	sf::Vector2f windowSize = target.mapPixelToCoords(static_cast<sf::Vector2i>(target.getSize()));
+	float wx = windowSize.x;
+	float wy = windowSize.y;
 
 	// background
 	float ScaleX = wx / m_backgroundTex.getSize().x;

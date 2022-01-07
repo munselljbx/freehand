@@ -129,8 +129,11 @@ bool DrawControl::evaluateData() const
 
 	if (meanErr > m_MAX_LINE_ERR)
 	{
-		return evaluateSine(last.y - first.y, last.x - first.x, startPoint, startPoint, endPoint);
-		//return evaluateSine(numerator, denominator, b, startPoint, endPoint);
+		sf::Vector2f fr = m_points.front();
+		sf::Vector2f bk = m_points.back();
+		return evaluateSine(bk.y - fr.y, bk.x - fr.x, fr, fr, bk);
+		//return evaluateSine(last.y - first.y, last.x - first.x, startPoint, startPoint, endPoint);
+		//return evaluateSine(numerator, denominator, startPoint, startPoint, endPoint);
 	}
 	else
 	{
@@ -172,7 +175,7 @@ bool DrawControl::evaluateSine(float mRise, float mRun, const sf::Vector2f& orig
 	// shift origin to (0,0) and rotate so midline is x-axis
 	vector<float> xRot;
 	vector<float> yRot;
-	if (mRise == 0.f)
+	if (mRun == 0.f)
 	{ // vertical
 		for (const auto& i : m_points)
 		{
@@ -180,7 +183,7 @@ bool DrawControl::evaluateSine(float mRise, float mRun, const sf::Vector2f& orig
 			yRot.push_back(i.x - origin.x);
 		}
 	}
-	else if (mRun == 0.f)
+	else if (mRise == 0.f)
 	{ // horizontal
 		for (const auto& i : m_points)
 		{
@@ -197,8 +200,8 @@ bool DrawControl::evaluateSine(float mRise, float mRun, const sf::Vector2f& orig
 
 		for (const auto& i : m_points)
 		{
-			xRot.push_back((i.x - origin.x) * cosTheta - (i.y - origin.y) * sinTheta);
-			yRot.push_back((i.x - origin.x) * sinTheta + (i.y - origin.y) * cosTheta);
+			xRot.push_back((i.x - origin.x) * cosTheta + (i.y - origin.y) * sinTheta);
+			yRot.push_back(-(i.x - origin.x) * sinTheta + (i.y - origin.y) * cosTheta);
 		}
 	}
 
@@ -212,9 +215,10 @@ bool DrawControl::evaluateSine(float mRise, float mRun, const sf::Vector2f& orig
 	// sort by ascending x-value and shift to start at x=0
 	vector<float> xRotSort;
 	vector<float> yRotSort;
+	size_t xRotMin = idx[0];
 	for (auto i : idx)
 	{
-		xRotSort.push_back(xRot[i]);
+		xRotSort.push_back(xRot[i] - xRot[xRotMin]);
 		yRotSort.push_back(yRot[i]);
 	}
 

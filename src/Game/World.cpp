@@ -41,7 +41,7 @@ void World::gameLoop()
 		{
 			// todo: update actors
 			//For gameloop DO NOT TOUCH
-			//m_actors->update();
+			m_actors->update();
 			lag -= MS_PER_UPDATE;
 		}
 

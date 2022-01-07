@@ -35,6 +35,8 @@ private:
 	World* m_world;
 	sf::RenderWindow* m_window;
 	DrawControl* m_drawing;
+
+	sf::Vector2f m_windowSize;
 };
 } // namespace game
 

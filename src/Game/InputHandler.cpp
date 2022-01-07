@@ -7,6 +7,7 @@ InputHandler::InputHandler(World& world)
 	m_world = &world;
 	m_window = &m_world->getWindow();
 	m_drawing = new DrawControl(m_world->getActorManager());
+	m_windowSize = m_window->mapPixelToCoords(static_cast<sf::Vector2i>(m_window->getSize()));
 }
 
 InputHandler::~InputHandler()
@@ -71,10 +72,9 @@ void InputHandler::handleInput()
 sf::Vector2f InputHandler::coordToWorld(const sf::Vector2f& coordPos) const
 { // coord is sfml coords -- top left origin and top right of window is window size
 	// world is bottom left origin and top right of window is (WORLD_X_MAX, WORLD_Y_MAX)
-	sf::Vector2f windowSize = m_window->mapPixelToCoords(static_cast<sf::Vector2i>(m_window->getSize()));
 	sf::Vector2f worldPos;
-	worldPos.x = (windowSize.x - coordPos.x) * (settings::GameSettings::WORLD_X_MAX / windowSize.x);
-	worldPos.y = (windowSize.y - coordPos.y) * (settings::GameSettings::WORLD_Y_MAX / windowSize.y);
+	worldPos.x = coordPos.x * (settings::GameSettings::WORLD_X_MAX / m_windowSize.x);
+	worldPos.y = (m_windowSize.y - coordPos.y) * (settings::GameSettings::WORLD_Y_MAX / m_windowSize.y);
 	return worldPos;
 }
 

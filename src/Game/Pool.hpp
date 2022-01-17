@@ -17,8 +17,7 @@ public:
 		static_assert(std::is_base_of<IActor, T>::value, "Derived not derived from BaseClass");
 
 		assert(initSize == m_data.size());
-		printf("Pool with size: %zu, %zu \n", initSize, m_data.size());
-		//std::cout << m_data.front.inUse << std::endl;
+		//printf("Pool with size: %zu, %zu \n", initSize, m_data.size());
 	}
 
 	T& firstAvailable()

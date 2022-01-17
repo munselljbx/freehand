@@ -6,12 +6,15 @@ App::App(sf::RenderWindow& window)
 {
 	m_window = &window;
 	m_systemHandle = m_window->getSystemHandle();
+#if defined(_DEBUG)
 	m_window->create(sf::VideoMode(1280.0f, 720.0f), "FREEHAND", sf::Style::Close);
-	//m_window->create(sf::VideoMode::getDesktopMode(), "FREEHAND", sf::Style::None);
+#else
+	m_window->create(sf::VideoMode::getDesktopMode(), "FREEHAND", sf::Style::None);
+#endif
 	m_platform.setIcon(m_systemHandle);
 
 	// Display settings
-	int systemRefresh = m_platform.getRefreshRate(m_systemHandle);
+	int systemRefresh = 60 //m_platform.getRefreshRate(m_systemHandle);
 	m_window->setFramerateLimit(systemRefresh);
 	m_window->setKeyRepeatEnabled(false);
 
@@ -37,8 +40,8 @@ void App::run()
 		map::IMap* map = new map::Duel(*m_window);
 		game::World* world = new game::World(*m_window, *map, sf::Uint8(1U));
 		world->gameLoop();
-		delete map;
 		delete world;
+		delete map;
 	}
 }
 

@@ -6,8 +6,7 @@ InputHandler::InputHandler(World& world)
 {
 	m_world = &world;
 	m_window = &m_world->getWindow();
-	m_drawing = new DrawControl(m_world->getActorManager());
-	m_windowSize = m_window->mapPixelToCoords(static_cast<sf::Vector2i>(m_window->getSize()));
+	m_drawing = new DrawControl(m_world->getTeam(), m_world->getActorManager());
 }
 
 InputHandler::~InputHandler()
@@ -69,15 +68,6 @@ void InputHandler::handleInput()
 	}
 }
 
-sf::Vector2f InputHandler::coordToWorld(const sf::Vector2f& coordPos) const
-{ // coord is sfml coords -- top left origin and top right of window is window size
-	// world is bottom left origin and top right of window is (WORLD_X_MAX, WORLD_Y_MAX)
-	sf::Vector2f worldPos;
-	worldPos.x = coordPos.x * (settings::GameSettings::WORLD_X_MAX / m_windowSize.x);
-	worldPos.y = (m_windowSize.y - coordPos.y) * (settings::GameSettings::WORLD_Y_MAX / m_windowSize.y);
-	return worldPos;
-}
-
 void InputHandler::handleGainedFocus()
 {
 	sf::Cursor cursor;
@@ -121,7 +111,7 @@ void InputHandler::handleMousePress(sf::Event event)
 		if (event.mouseButton.button == sf::Mouse::Left)
 		{
 			m_drawing->startDraw();
-			m_drawing->addPoint(coordToWorld(mousePos));
+			m_drawing->addPoint(settings::GameSettings::coordToWorld(mousePos));
 		}
 		else if (event.mouseButton.button == sf::Mouse::Right)
 		{
@@ -135,7 +125,7 @@ void InputHandler::handleMouseRelease(sf::Event event)
 	sf::Vector2f mousePos = m_window->mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
 	if (event.mouseButton.button == sf::Mouse::Left)
 	{
-		m_drawing->addPoint(coordToWorld(mousePos));
+		m_drawing->addPoint(settings::GameSettings::coordToWorld(mousePos));
 		m_drawing->stopDraw();
 	}
 }
@@ -148,7 +138,7 @@ void InputHandler::handleTouchBegan(sf::Event event)
 		if (m_world->getMap().inArea(m_world->getTeam(), touchPos))
 		{
 			m_drawing->startDraw();
-			m_drawing->addPoint(coordToWorld(touchPos));
+			m_drawing->addPoint(settings::GameSettings::coordToWorld(touchPos));
 		}
 	}
 }
@@ -158,7 +148,7 @@ void InputHandler::handleTouchEnded(sf::Event event)
 	sf::Vector2f touchPos = m_window->mapPixelToCoords(sf::Vector2i(event.touch.x, event.touch.y));
 	if (event.touch.finger == 0)
 	{
-		m_drawing->addPoint(coordToWorld(touchPos));
+		m_drawing->addPoint(settings::GameSettings::coordToWorld(touchPos));
 		m_drawing->stopDraw();
 	}
 }
@@ -168,7 +158,7 @@ void InputHandler::handleMouseMoved(sf::Event event)
 	sf::Vector2f mousePos = m_window->mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
 	if (m_world->getMap().inArea(m_world->getTeam(), mousePos))
 	{
-		m_drawing->addPoint(coordToWorld(mousePos));
+		m_drawing->addPoint(settings::GameSettings::coordToWorld(mousePos));
 	}
 	else
 	{
@@ -181,7 +171,7 @@ void InputHandler::handleTouchMoved(sf::Event event)
 	sf::Vector2f touchPos = m_window->mapPixelToCoords(sf::Vector2i(event.touch.x, event.touch.y));
 	if (m_world->getMap().inArea(m_world->getTeam(), touchPos))
 	{
-		m_drawing->addPoint(coordToWorld(touchPos));
+		m_drawing->addPoint(settings::GameSettings::coordToWorld(touchPos));
 	}
 	else
 	{

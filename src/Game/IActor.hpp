@@ -1,26 +1,21 @@
 #ifndef GAME_IACTOR_HPP
 #define GAME_IACTOR_HPP
 
+#include "./Map/IMap.hpp"
 #include "./Settings/GameSettings.hpp"
 #include <SFML/Graphics.hpp>
 
 namespace game
 {
 class IActor : public sf::Drawable
-{ // Interface for objects which have physics updates are are drawn to the window
+{ // Interface for objects which collide and are are drawn to the window
 public:
-	IActor(sf::Uint8 team, float health, float maxHealth) :
-		inUse(false),
-		inArea(false),
-		m_team(team),
-		m_health(health),
-		m_maxHealth(maxHealth),
-		m_teamColor(settings::GameSettings::getTeamColor(team))
+	IActor(sf::Uint8 team, float health, float maxHealth)
 	{
-		updateAlpha();
+		init(team, health, maxHealth);
+		inUse = false;
 	}
 	virtual ~IActor() = default;
-	virtual void update() = 0;
 
 	virtual float getTeam()
 	{
@@ -32,8 +27,11 @@ public:
 	}
 	virtual void setHealth(float health)
 	{
+		printf("h: %f\n", health);
 		m_health = health;
 		updateAlpha();
+		if (health <= 0.f)
+			inUse = false;
 	}
 
 	bool operator==(const IActor& other) const
@@ -43,22 +41,33 @@ public:
 
 	bool inUse;
 	bool inArea;
+	bool needSend; // needs to be sent to other players
 
 protected:
-	void reInit(sf::Uint8 team, float health, float maxHealth)
+	void init(sf::Uint8 team, float health, float maxHealth)
 	{
-		inUse = false;
+		assert(maxHealth >= health);
+		assert(maxHealth >= 0.f);
+		inUse = true;
 		inArea = false;
+		needSend = false;
 		m_team = team;
 		m_maxHealth = maxHealth;
-		setHealth(health);
 		m_teamColor = settings::GameSettings::getTeamColor(team);
+		setHealth(health);
 	}
+	// virtual void updateCollision() = 0;
+	// virtual void updateInArea() = 0;
+	// virtual void onEnteredArea() = 0;
+	// virtual void onExitedArea() = 0;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 	virtual void updateAlpha()
 	{
-		sf::Uint8 alpha = static_cast<sf::Uint8>(255.f * m_health / m_maxHealth);
-		m_teamColor.a = alpha > m_MIN_ALPHA ? alpha : m_MIN_ALPHA;
+		if (m_maxHealth > 0.f)
+		{
+			sf::Uint8 alpha = static_cast<sf::Uint8>(255.f * m_health / m_maxHealth);
+			m_teamColor.a = alpha > m_MIN_ALPHA ? alpha : m_MIN_ALPHA;
+		}
 	}
 
 	sf::Uint8 m_team;

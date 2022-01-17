@@ -1,12 +1,12 @@
 #ifndef GAME_DRAWCONTROL_HPP
 #define GAME_DRAWCONTROL_HPP
 
+#include "./Settings/GameSettings.hpp"
 #include "ActorManager.hpp"
 #include "Boundary.hpp"
 #include "Helper.hpp"
 #include "Pool.hpp"
 #include "Ray.hpp"
-#include "Settings/GameSettings.hpp"
 #include <pocketfft-cpp/pocketfft_hdronly.h>
 
 namespace game
@@ -14,7 +14,8 @@ namespace game
 class DrawControl : public sf::Drawable
 {
 public:
-	DrawControl(ActorManager& actors) :
+	DrawControl(const sf::Uint8& team, ActorManager& actors) :
+		m_team(team),
 		m_actors(&actors),
 		m_dot(m_DOT_RADIUS_DEFAULT, m_DOT_POINTCOUNT_DEFAULT) {};
 	DrawControl(ActorManager& actors, float dotRadius, int dotPointCount) :
@@ -31,6 +32,7 @@ private:
 	bool evaluateLine(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, float meanErr) const;
 	bool evaluateSine(float mRise, float mRun, const sf::Vector2f& origin, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint) const;
 
+	sf::Uint8 m_team;
 	ActorManager* m_actors;
 
 	bool m_isDrawing = false;
@@ -38,7 +40,7 @@ private:
 	inline const static float m_DOT_RADIUS_DEFAULT = 7.0f;
 	inline const static unsigned int m_DOT_POINTCOUNT_DEFAULT = 20U;
 	mutable sf::CircleShape m_dot;
-	inline const static unsigned int m_MIN_POINTS = 15U;
+	inline const static unsigned int m_MIN_POINTS = 10U;
 	inline const static float m_MAX_LINE_ERR = 30.f;
 
 	// Boundary reqs

@@ -2,8 +2,8 @@
 #define GAME_INPUTHANDLER_HPP
 
 #include "./App/App.hpp"
+#include "./Settings/GameSettings.hpp"
 #include "DrawControl.hpp"
-#include "Settings/GameSettings.hpp"
 #include "World.hpp"
 
 namespace game
@@ -18,8 +18,6 @@ public:
 	DrawControl& getDrawing();
 
 private:
-	sf::Vector2f coordToWorld(const sf::Vector2f& coordPos) const;
-
 	void handleGainedFocus();
 	void handleLostFocus();
 	void handleMouseEntered();
@@ -35,8 +33,6 @@ private:
 	World* m_world;
 	sf::RenderWindow* m_window;
 	DrawControl* m_drawing;
-
-	sf::Vector2f m_windowSize;
 };
 } // namespace game
 

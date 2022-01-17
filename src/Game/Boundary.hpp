@@ -11,12 +11,11 @@ class Boundary : public IActor
 {
 public:
 	Boundary();
-	Boundary(sf::Uint8 team, float health, float maxHealth, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint);
 	void setFields(sf::Uint8 team, float health, float maxHealth, const sf::Vector2f& startPoint, const sf::Vector2f& endPoint);
 	void setLine(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint);
-
-	virtual void update();
-
+	sf::Vector2f getStart() const;
+	sf::Vector2f getEnd() const;
+	virtual void setHealth(float health) override;
 	bool operator==(const Boundary& other) const
 	{
 		return (IActor::operator==(other) && m_line.getBounds() == other.m_line.getBounds());
@@ -24,9 +23,11 @@ public:
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	void updateGraphic();
 
-	std::vector<sf::Vector2f> m_points; // two points
-	sf::VertexArray m_line;				// for drawing. two vertices: [0] is startpoint of line [1] end.
+	sf::Vector2f m_start;
+	sf::Vector2f m_end;
+	sf::VertexArray m_line; // for drawing. two vertices: [0] is startpoint of line [1] end.
 };
 } // namespace game
 

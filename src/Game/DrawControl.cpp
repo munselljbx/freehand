@@ -151,7 +151,7 @@ bool DrawControl::evaluateLine(const sf::Vector2f& startPoint, const sf::Vector2
 		std::cout << "Invalid Boundary Length" << std::endl;
 		return false;
 	}
-	else if (meanErr > 0.f)
+	else if (meanErr > 1.f)
 	{
 		health = 1 / meanErr * length;
 	}
@@ -160,9 +160,8 @@ bool DrawControl::evaluateLine(const sf::Vector2f& startPoint, const sf::Vector2
 		health = length;
 	}
 
-	// make Boundary //todo: fix team number and no temp object
-	Boundary bound(sf::Uint8(1U), health, length, startPoint, endPoint);
-	m_actors->m_boundaryPool.add(bound);
+	// make Boundary
+	m_actors->m_boundaryPool.firstAvailable().setFields(m_team, health, length, startPoint, endPoint);
 	return true;
 }
 
@@ -274,7 +273,7 @@ bool DrawControl::evaluateSine(float mRise, float mRun, const sf::Vector2f& orig
 	{
 	}
 
-	// todo: team, health, amplitude, speed,
+	// todo: health, amplitude, speed,
 	float rms = 0.f;
 	for (auto i : yRotSort)
 	{
@@ -288,9 +287,7 @@ bool DrawControl::evaluateSine(float mRise, float mRun, const sf::Vector2f& orig
 	float amplitude = rms * 1.41421356237; // sqrt 2
 	float speed = 5.f;
 
-	// todo: fix team number and no temp object
-	Ray newRay(sf::Uint8(1U), health, startPoint, endPoint, frequency, amplitude, speed, maxPhase);
-	m_actors->m_rayPool.add(newRay);
+	m_actors->m_rayPool.firstAvailable().setFields(m_team, health, startPoint, endPoint, frequency, amplitude, speed, maxPhase);
 	return true;
 }
 

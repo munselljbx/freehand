@@ -1,6 +1,7 @@
 #ifndef GAME_ACTORMANAGER_HPP
 #define GAME_ACTORMANAGER_HPP
 
+#include "./Map/Imap.hpp"
 #include "Boundary.hpp"
 #include "Pool.hpp"
 #include "Ray.hpp"
@@ -15,7 +16,7 @@ public:
 		m_boundaryPool(20U),
 		m_rayPool(30U)
 	{}
-	void update();
+	void update(const map::IMap& map);
 
 	//Pool<Source> m_sourcePool;
 	Pool<Boundary> m_boundaryPool;

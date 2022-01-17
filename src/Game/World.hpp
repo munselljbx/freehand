@@ -3,10 +3,10 @@
 
 #include "./App/PauseMenu.hpp"
 #include "./Map/IMap.hpp"
+#include "./Settings/GameSettings.hpp"
 #include "ActorManager.hpp"
 #include "InputHandler.hpp"
 #include "Ray.hpp"
-#include "Settings/GameSettings.hpp"
 
 namespace game
 {

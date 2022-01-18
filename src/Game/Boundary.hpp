@@ -23,7 +23,7 @@ public:
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	void updateGraphic();
+	void updateGraphicColor();
 
 	sf::Vector2f m_start;
 	sf::Vector2f m_end;

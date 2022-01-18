@@ -5,25 +5,30 @@
 #include "Boundary.hpp"
 #include "Pool.hpp"
 #include "Ray.hpp"
+#include "Source.hpp"
 
 namespace game
 {
 class ActorManager : public sf::Drawable
 {
 public:
-	ActorManager() :
-		//m_sourcePool(m_INITIAL_SOURCE_SIZE),
+	ActorManager(map::IMap& map) :
+		m_sources(map.makeSources()),
 		m_boundaryPool(20U),
-		m_rayPool(30U)
-	{}
-	void update(const map::IMap& map);
+		m_rayPool(30U),
+		m_map(&map)
+	{
+	}
+	void update(float chalk);
 
-	//Pool<Source> m_sourcePool;
+	std::vector<Source> m_sources;
 	Pool<Boundary> m_boundaryPool;
 	Pool<Ray> m_rayPool;
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	map::IMap* m_map;
 };
 } // namespace game
 

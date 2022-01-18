@@ -29,7 +29,7 @@ void Ray::setFields(sf::Uint8 team, float health, const sf::Vector2f& startPoint
 	{
 		advance();
 	}
-	//m_points.push_back(sf::Vertex(m_end, m_teamColor)); // helps visualize errors
+	//m_points.push_back(sf::Vertex(m_end, m_color)); // helps visualize errors
 	m_startFixed = false;
 }
 
@@ -79,7 +79,7 @@ void Ray::collide(Boundary& bound)
 	bool doesCollide = getLineIntersection(bound.getStart(), bound.getEnd(), m_start, m_end, intersect);
 	if (doesCollide)
 	{
-		float h= bound.getHealth());
+		float h = bound.getHealth();
 		bound.setHealth(h - m_health);
 		setHealth(m_health - h);
 	}
@@ -91,13 +91,13 @@ void Ray::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	sf::VertexArray sinGraphic(sf::LineStrip, m_points.size());
 	for (size_t i = 0U; i < m_points.size(); i++)
 	{
-		sinGraphic[i] = sf::Vertex(settings::GameSettings::worldToCoord(m_points[i]), m_teamColor);
+		sinGraphic[i] = sf::Vertex(settings::GameSettings::worldToCoord(m_points[i]), m_color);
 	}
 	target.draw(sinGraphic, states);
 
 	sf::VertexArray midlineGraphic(sf::LineStrip, 2);
-	midlineGraphic[0] = sf::Vertex(settings::GameSettings::worldToCoord(m_start), m_teamColor);
-	midlineGraphic[1] = sf::Vertex(settings::GameSettings::worldToCoord(m_end), m_teamColor);
+	midlineGraphic[0] = sf::Vertex(settings::GameSettings::worldToCoord(m_start), m_color);
+	midlineGraphic[1] = sf::Vertex(settings::GameSettings::worldToCoord(m_end), m_color);
 	target.draw(midlineGraphic, states);
 }
 }

@@ -22,8 +22,8 @@ void Boundary::setLine(const sf::Vector2f& startPoint, const sf::Vector2f& endPo
 {
 	m_start = startPoint;
 	m_end = endPoint;
-	m_line[0] = sf::Vertex(settings::GameSettings::worldToCoord(startPoint), m_teamColor);
-	m_line[1] = sf::Vertex(settings::GameSettings::worldToCoord(endPoint), m_teamColor);
+	m_line[0] = sf::Vertex(settings::GameSettings::worldToCoord(startPoint), m_color);
+	m_line[1] = sf::Vertex(settings::GameSettings::worldToCoord(endPoint), m_color);
 }
 
 sf::Vector2f Boundary::getStart() const
@@ -38,14 +38,14 @@ sf::Vector2f Boundary::getEnd() const
 void Boundary::setHealth(float health)
 {
 	IActor::setHealth(health);
-	updateGraphic();
+	updateGraphicColor();
 }
 
-void Boundary::updateGraphic()
+void Boundary::updateGraphicColor()
 {
-	std::cout << m_teamColor.a << std::endl;
-	m_line[0].color = m_teamColor;
-	m_line[1].color = m_teamColor;
+	std::cout << m_color.a << std::endl;
+	m_line[0].color = m_color;
+	m_line[1].color = m_color;
 }
 
 void Boundary::draw(sf::RenderTarget& target, sf::RenderStates states) const

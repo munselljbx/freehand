@@ -41,6 +41,7 @@ private:
 	map::IMap* m_map;
 
 	sf::Uint8 m_localTeam;
+	float m_chalk = settings::GameSettings::MAX_CHALK / 2.f;
 };
 }
 

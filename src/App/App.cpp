@@ -14,7 +14,7 @@ App::App(sf::RenderWindow& window)
 	m_platform.setIcon(m_systemHandle);
 
 	// Display settings
-	int systemRefresh = 60 //m_platform.getRefreshRate(m_systemHandle);
+	int systemRefresh = 60; //m_platform.getRefreshRate(m_systemHandle);
 	m_window->setFramerateLimit(systemRefresh);
 	m_window->setKeyRepeatEnabled(false);
 

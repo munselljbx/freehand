@@ -31,6 +31,14 @@ bool Duel::inArea(sf::Uint8 team, const sf::Vector2f& point) const
 	return false;
 }
 
+std::vector<game::Source> Duel::makeSources() const
+{
+	std::vector<game::Source> sources;
+	sources.emplace_back(sf::Uint8(1U), settings::GameSettings::START_HEALTH, settings::GameSettings::START_HEALTH, 160.f, sf::Vector2f(200.f, 450.f));
+	sources.emplace_back(sf::Uint8(2U), settings::GameSettings::START_HEALTH, settings::GameSettings::START_HEALTH, 160.f, sf::Vector2f(1400.f, 450.f));
+	return sources;
+}
+
 void Duel::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	sf::Vector2f windowSize = target.mapPixelToCoords(static_cast<sf::Vector2i>(target.getSize()));

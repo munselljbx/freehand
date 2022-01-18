@@ -19,6 +19,7 @@ public:
 	void run();
 	void applyCursor();
 	sf::RenderWindow& getWindow() const;
+
 private:
 	void printFullscreenModes() const;
 

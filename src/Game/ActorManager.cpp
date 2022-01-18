@@ -2,7 +2,7 @@
 
 namespace game
 {
-void ActorManager::update(const map::IMap& map)
+void ActorManager::update(float chalk)
 {
 	// collision todo
 	for (auto& ray : m_rayPool.m_data)
@@ -24,8 +24,13 @@ void ActorManager::update(const map::IMap& map)
 	{
 		if (i.inUse)
 		{
-			i.update(map);
+			i.update(*m_map);
 		}
+	}
+
+	for (auto& i : m_sources)
+	{
+		i.update(chalk);
 	}
 }
 
@@ -41,4 +46,9 @@ void ActorManager::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		if (i.inUse)
 			target.draw(i, states);
 	}
+	for (auto& i : m_sources)
+	{
+		target.draw(i, states);
+	}
+}
 }

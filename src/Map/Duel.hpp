@@ -1,6 +1,7 @@
 #ifndef MAP_DUEL_HPP
 #define MAP_DUEL_HPP
 
+#include "./Settings/GameSettings.hpp"
 #include "IMap.hpp"
 
 namespace map
@@ -10,10 +11,10 @@ class Duel : public IMap
 public:
 	Duel(sf::RenderWindow& window);
 	virtual bool inArea(sf::Uint8 team, const sf::Vector2f& point) const override;
+	virtual std::vector<game::Source> makeSources() const override;
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
 	sf::Texture m_backgroundTex;
 	mutable sf::Sprite m_background;
 

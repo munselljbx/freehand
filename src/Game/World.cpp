@@ -8,7 +8,8 @@ World::World(sf::RenderWindow& window, map::IMap& map, sf::Uint8 team) :
 	m_localTeam(team)
 {
 	settings::GameSettings::windowSize = m_window->mapPixelToCoords(static_cast<sf::Vector2i>(m_window->getSize()));
-	m_actors = new ActorManager();
+
+	m_actors = new ActorManager(*m_map);
 	m_input = new InputHandler(*this);
 }
 
@@ -38,7 +39,11 @@ void World::gameLoop()
 		//Fixed Time Loop
 		while (lag >= MS_PER_UPDATE)
 		{
-			m_actors->update(*m_map);
+			m_chalk += settings::GameSettings::CHALK_PER_TICK;
+			if (m_chalk > settings::GameSettings::MAX_CHALK)
+				m_chalk = settings::GameSettings::MAX_CHALK;
+
+			m_actors->update(m_chalk);
 			//For gameloop DO NOT TOUCH
 			lag -= MS_PER_UPDATE;
 		}

@@ -10,6 +10,8 @@ public:
 	inline static const float WORLD_X_MAX = 1600.f;
 	inline static const float WORLD_Y_MAX = 900.f;
 
+	inline static const float START_HEALTH = 2000.f;
+
 	inline static const float MAX_CHALK = 1000.f;
 	inline static const float CHALK_PER_TICK = 0.5;
 

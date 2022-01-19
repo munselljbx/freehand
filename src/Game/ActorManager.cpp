@@ -16,6 +16,10 @@ void ActorManager::update(float chalk)
 					ray.collide(b);
 				}
 			}
+			for (auto& s : m_sources)
+			{
+				ray.collide(s);
+			}
 		}
 	}
 

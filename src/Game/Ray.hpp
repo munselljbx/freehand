@@ -6,6 +6,7 @@
 #include "IActor.hpp"
 #include "Map/IMap.hpp"
 #include "Settings/GameSettings.hpp"
+#include "Source.hpp"
 
 namespace game
 {
@@ -17,6 +18,7 @@ public:
 	void update(const map::IMap& map);
 	void advance();
 	void collide(Boundary& bound);
+	void collide(Source& source);
 	bool operator==(const Ray& other) const
 	{
 		return (IActor::operator==(other) && m_freq == other.m_freq && m_amp == other.m_amp && m_speed == other.m_speed);

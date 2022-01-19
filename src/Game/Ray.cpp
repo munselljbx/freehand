@@ -42,7 +42,15 @@ void Ray::update(const map::IMap& map)
 	else
 	{
 		// inArea?
-		inArea = map.inArea(m_team, m_end);
+		if (inArea)
+		{ // exit?
+			inArea = map.inArea(m_team, m_start);
+		}
+		else
+		{ // enter?
+			inArea = map.inArea(m_team, m_end);
+		}
+
 		// move one frame
 		advance();
 	}
@@ -80,8 +88,26 @@ void Ray::collide(Boundary& bound)
 	if (doesCollide)
 	{
 		float h = bound.getHealth();
-		bound.setHealth(h - m_health);
-		setHealth(m_health - h);
+		float d = h < m_health ? h : m_health;
+		bound.setHealth(h - d);
+		setHealth(m_health - d);
+	}
+}
+
+void Ray::collide(Source& source)
+{
+	if (source.getTeam() == m_team)
+		return;
+	sf::Vector2f pos = source.getPosWorld();
+	float r = source.getRadiusWorld();
+
+	bool doesCollide = std::pow(m_end.x - pos.x, 2.f) + std::pow(m_end.y - pos.y, 2.f) <= r * r;
+	if (doesCollide)
+	{
+		float h = source.getHealth();
+		float d = h < m_health ? h : m_health;
+		source.setHealth(h - d);
+		setHealth(m_health - d);
 	}
 }
 

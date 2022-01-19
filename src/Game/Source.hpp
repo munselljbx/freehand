@@ -13,6 +13,8 @@ public:
 	Source(sf::Uint8 team, float health, float maxHealth, float radius, sf::Vector2f pos);
 	void update(float chalk);
 	virtual void setHealth(float health) override;
+	sf::Vector2f getPosWorld() const;
+	float getRadiusWorld() const;
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

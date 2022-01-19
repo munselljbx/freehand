@@ -20,7 +20,7 @@ Source::Source(sf::Uint8 team, float health, float maxHealth, float radius, sf::
 	m_outerCircle.setPosition(pos);
 	m_outerCircle.setFillColor(teamColor);
 	m_outerCircle.setOutlineThickness(-m_OUTLINE_THICKNESS);
-	m_outerCircle.setOutlineColor(teamColor);
+	m_outerCircle.setOutlineColor(sf::Color::Black);
 
 	const float innerRadius = radius * m_INNER_CIRCLE_PCT;
 	const unsigned int innerPointCount = settings::GameSettings::circleNSides(innerRadius);
@@ -55,7 +55,18 @@ void Source::update(float chalk)
 void Source::setHealth(float health)
 {
 	IActor::setHealth(health);
+	printf("Src Health: %f\n", m_health);
 	m_outerCircle.setFillColor(m_color);
+}
+
+sf::Vector2f Source::getPosWorld() const
+{ // position in world coords
+	return settings::GameSettings::coordToWorld(m_outerCircle.getPosition());
+}
+
+float Source::getRadiusWorld() const
+{ // radius in world units
+	return m_outerCircle.getRadius() * settings::GameSettings::WORLD_X_MAX / settings::GameSettings::windowSize.x;
 }
 
 void Source::draw(sf::RenderTarget& target, sf::RenderStates states) const

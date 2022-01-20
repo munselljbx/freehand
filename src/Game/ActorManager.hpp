@@ -20,6 +20,8 @@ public:
 	{
 	}
 	void update(float chalk);
+	void collide(Ray& ray, Boundary& bound);
+	void collide(Ray& ray, Source& source);
 
 	std::vector<Source> m_sources;
 	Pool<Boundary> m_boundaryPool;
@@ -29,6 +31,8 @@ private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	map::IMap* m_map;
+
+	inline const static float m_MIN_SPLIT_LENGTH = 20.f;
 };
 } // namespace game
 

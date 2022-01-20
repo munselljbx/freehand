@@ -16,7 +16,7 @@ public:
 	}
 	virtual ~IActor() = default;
 
-	virtual float getTeam()
+	virtual sf::Uint8 getTeam()
 	{
 		return m_team;
 	}
@@ -63,8 +63,15 @@ protected:
 	{
 		if (m_maxHealth > 0.f)
 		{
-			sf::Uint8 alpha = static_cast<sf::Uint8>(255.f * m_health / m_maxHealth);
-			m_color.a = alpha > m_MIN_ALPHA ? alpha : m_MIN_ALPHA;
+			if (m_health < 0.f)
+			{
+				m_color.a = m_MIN_ALPHA;
+			}
+			else
+			{
+				sf::Uint8 alpha = static_cast<sf::Uint8>(255.f * m_health / m_maxHealth);
+				m_color.a = alpha > m_MIN_ALPHA ? alpha : m_MIN_ALPHA;
+			}
 		}
 	}
 
@@ -72,7 +79,7 @@ protected:
 	float m_health;
 	float m_maxHealth;
 	sf::Color m_color;
-	const static sf::Uint8 m_MIN_ALPHA = 50U;
+	const static sf::Uint8 m_MIN_ALPHA = 24U;
 };
 }
 

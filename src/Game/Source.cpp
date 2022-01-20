@@ -55,7 +55,6 @@ void Source::update(float chalk)
 void Source::setHealth(float health)
 {
 	IActor::setHealth(health);
-	printf("Src Health: %f\n", m_health);
 	m_outerCircle.setFillColor(m_color);
 }
 
